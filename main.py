@@ -12,7 +12,7 @@ app = FastAPI()
 
 BASE_DIR = Path(__file__).parent
 
-MODEL_PATH = BASE_DIR / "model" / "best5.pt"
+MODEL_PATH = BASE_DIR / "model" / "best4.pt"
 
 model = YOLO(str(MODEL_PATH))
 
@@ -28,13 +28,13 @@ os.makedirs(
 )
 
 # CLASS_COLORS = {
-#     "aksesoris cold": (255, 153, 102),
-#     "aksesoris hot": (102, 204, 153),
-#     "arcing horn": (153, 153, 255),
-#     "bracing": (102, 255, 255),
-#     "isolator": (255, 204, 102),
-#     "jumper": (204, 153, 255),
-#     "pondasi": (153, 204, 255),
+#     "aksesoris cold": (72, 101, 241),
+#     "aksesoris hot": (76, 175, 80),
+#     "arcing horn": (255, 167, 38),
+#     "bracing": (38, 198, 218),
+#     "isolator": (229, 57, 53),
+#     "jumper": (141, 110, 99),
+#     "pondasi": (66, 133, 244),
 # }
 
 @app.post("/predict")
@@ -53,7 +53,7 @@ async def predict(
 
     results = model(
         file_path,
-        conf=0.6
+        conf=0.25
     )
 
     img = cv2.imread(file_path)
@@ -64,7 +64,7 @@ async def predict(
 
         conf = float(box.conf[0])
 
-        if conf < 0.6:
+        if conf < 0.25:
             continue
 
         cls_id = int(box.cls[0])
