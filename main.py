@@ -12,7 +12,7 @@ app = FastAPI()
 
 BASE_DIR = Path(__file__).parent
 
-MODEL_PATH = BASE_DIR / "model" / "best3.pt"
+MODEL_PATH = BASE_DIR / "model" / "best5.pt"
 
 model = YOLO(str(MODEL_PATH))
 
@@ -74,7 +74,7 @@ async def predict(
             box.xyxy[0]
         )
 
-        label = f"{model.names[cls_id]} {conf*100:.1f}%"
+        label = f"{model.names[cls_id]} {conf:.2f}"
 
         color = (255, 0, 0)
 
@@ -98,8 +98,8 @@ async def predict(
             2
         )
 
-        font_scale = 2
-        font_thickness = 3
+        font_scale = 1
+        font_thickness = 2
         padding = 6
 
         (tw, th), _ = cv2.getTextSize(
