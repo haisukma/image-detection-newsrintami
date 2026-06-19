@@ -4,12 +4,17 @@ from fastapi.staticfiles import StaticFiles
 from ultralytics import YOLO
 from PIL import Image
 import shutil
+from pathlib import Path
 import cv2
 import os
 
 app = FastAPI()
 
-model = YOLO("best.pt")
+BASE_DIR = Path(__file__).parent
+
+MODEL_PATH = BASE_DIR / "model" / "best3.pt"
+
+model = YOLO(str(MODEL_PATH))
 
 app.mount(
     "/uploads",
@@ -21,6 +26,16 @@ os.makedirs(
     "uploads",
     exist_ok=True
 )
+
+# CLASS_COLORS = {
+#     "aksesoris cold": (255, 153, 102),
+#     "aksesoris hot": (102, 204, 153),
+#     "arcing horn": (153, 153, 255),
+#     "bracing": (102, 255, 255),
+#     "isolator": (255, 204, 102),
+#     "jumper": (204, 153, 255),
+#     "pondasi": (153, 204, 255),
+# }
 
 @app.post("/predict")
 async def predict(
@@ -38,7 +53,7 @@ async def predict(
 
     results = model(
         file_path,
-        conf=0.45
+        conf=0.6
     )
 
     img = cv2.imread(file_path)
@@ -49,7 +64,7 @@ async def predict(
 
         conf = float(box.conf[0])
 
-        if conf < 0.45:
+        if conf < 0.6:
             continue
 
         cls_id = int(box.cls[0])
@@ -62,6 +77,13 @@ async def predict(
         label = f"{model.names[cls_id]} {conf*100:.1f}%"
 
         color = (255, 0, 0)
+
+        # class_name = model.names[cls_id]
+
+        # color = CLASS_COLORS.get(
+        #     class_name,
+        #     (255, 255, 255)
+        # )
 
         detections.append({
             "class": label,
