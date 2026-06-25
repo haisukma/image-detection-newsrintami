@@ -6,15 +6,17 @@ __pycache__/
 
 venv/
 .venv/
+.env
 img-detection-venv/
 uploads/
+demo_similarity/
 
 .python-version
 
 # .ipynb_checkpoints/
 
 *.zip
-Srintami-Transmission.v4i.yolov8.zip
+Srintami-Transmission.v7i.yolo26.zip
 Srintami-Transmission.v5i.yolov8.zip
 
 .DS_Store

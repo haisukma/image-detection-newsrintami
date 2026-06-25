@@ -53,7 +53,7 @@ async def predict(
 
     results = model(
         file_path,
-        conf=0.25
+        conf=0.55
     )
 
     img = cv2.imread(file_path)
@@ -64,7 +64,7 @@ async def predict(
 
         conf = float(box.conf[0])
 
-        if conf < 0.25:
+        if conf < 0.55:
             continue
 
         cls_id = int(box.cls[0])
