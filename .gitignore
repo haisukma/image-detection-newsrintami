@@ -10,6 +10,7 @@ venv/
 img-detection-venv/
 uploads/
 demo_similarity/
+demo_llm/
 
 .python-version
 
