@@ -7,6 +7,7 @@ from fastapi.staticfiles import StaticFiles
 from ultralytics import YOLO
 from app.detector import model
 from app.image_utils import crop_bbox
+from app.llm_services import analyze_condition
 
 app = FastAPI()
 
@@ -129,6 +130,16 @@ async def predict(
             "message": f"{expected_item} tidak ditemukan pada gambar.",
             "detections": detections
         }
+    
+    cropped_image = crop_bbox(
+        file_path,
+        target_detection["bbox"]
+    )
+
+    llm_result = analyze_condition(
+        cropped_image,
+        target_detection["class"]
+)
 
     output_filename = f"result_{file.filename}"
 
@@ -144,5 +155,6 @@ async def predict(
         "filename": file.filename,
         "image_url": str(request.base_url) + f"uploads/{output_filename}",
         "target_item": target_detection,
-        "detections": detections
+        "detections": detections,
+        "anomaly_detection": llm_result
     }

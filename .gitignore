@@ -11,6 +11,7 @@ img-detection-venv/
 uploads/
 demo_similarity/
 demo_llm/
+main2.py
 
 .python-version
 
