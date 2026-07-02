@@ -18,15 +18,26 @@ CONDITIONS = {
         "Retak Rambut",
         "Gumpil",
         "Pecah",
-        "Flashover"
+        "Hilang",
+        "Flashover",
+        "Polutan"
     ],
     "aksesoris sisi cold": [
         "Normal",
-        "Korosi"
+        "Korosi 20-40%",
+        "Korosi 40-60%",
+        "Korosi >60%"
     ],
     "aksesoris sisi hot": [
         "Normal",
-        "Korosi"
+        "Korosi 20-40%",
+        "Korosi 40-60%",
+        "Korosi >60%"
+    ],
+    "arcing horn": [
+        "Terpasang Normal",
+        "Tidak Sejajar",
+        "Tidak Terpasang"
     ]
 }
 
